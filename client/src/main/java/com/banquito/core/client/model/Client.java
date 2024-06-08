@@ -57,8 +57,8 @@ public class Client implements Serializable {
     private String companyName;
     @Column(name = "COMPANY_TYPE", length = 16)
     private String companyType;
-    @Column(name = "STATUS", length = 3, nullable = false)
-    private String status;
+    @Column(name = "STATE", length = 3, nullable = false)
+    private String state;
     @Column(name = "CREATE_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp createDate;
@@ -74,13 +74,13 @@ public class Client implements Serializable {
     @Column(name = "NOTES", length = 1000)
     private String notes;
 
+    @ManyToOne
+    @JoinColumn(name = "CODE_SEGMENT", referencedColumnName = "CODE_SEGMENT", insertable = false, updatable = false)
+    private Segment segment;
     @OneToMany(mappedBy = "client")
     private List<ClientPhone> phones;
     @OneToMany(mappedBy = "client")
     private List<ClientAddress> addresses;
-    @ManyToOne
-    @JoinColumn(name = "CODE_SEGMENT", referencedColumnName = "CODE_SEGMENT")
-    private Segment segment;
 
     public Client(Long clientId) {
         this.id = clientId;
