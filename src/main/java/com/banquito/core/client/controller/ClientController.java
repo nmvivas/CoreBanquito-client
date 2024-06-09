@@ -84,4 +84,34 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/reactivate/{id}")
+    public ResponseEntity<Void> reactivateClient(@PathVariable Long id) {
+        try {
+            clientService.reactivateClient(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/last")
+    public ResponseEntity<Client> getLastInsertedClient() {
+        return ResponseEntity.ok(clientService.getLastInsertedClient());
+    }
+
+    @GetMapping("/identification_type/{identificationType}")
+    public List<Client> getClientsByIdentificationType(@PathVariable String identificationType) {
+        return clientService.getClientsByIdentificationType(identificationType);
+    }
+
+    @GetMapping("/tradename/{tradename}")
+    public List<Client> getClientsByTradename(@PathVariable String tradename) {
+        return clientService.getClientsByTradename(tradename);
+    }
+
+    @GetMapping("/company_name/{companyName}")
+    public List<Client> getClientsByCompanyName(@PathVariable String companyName) {
+        return clientService.getClientsByCompanyName(companyName);
+    }
 }
