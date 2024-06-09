@@ -1,0 +1,123 @@
+Pruebas para Client
+Crear un nuevo cliente
+Método HTTP: POST
+URL: http://localhost:8080/client
+Headers:
+Content-Type: application/json
+
+Obtener todos los clientes
+Método HTTP: GET
+URL: http://localhost:8080/client
+Obtener un cliente por ID
+Método HTTP: GET
+URL: http://localhost:8080/client/{id}
+Reemplaza {id} con el ID del cliente.
+Actualizar un cliente
+Método HTTP: PUT
+URL: http://localhost:8080/client/{id}
+
+Obtener el último cliente ingresado
+Método HTTP: GET
+URL: http://localhost:8080/client/last
+Eliminar un cliente (actualizar estado a "INA")
+Método HTTP: DELETE
+URL: http://localhost:8080/client/{id}
+Reemplaza {id} con el ID del cliente.
+Reactivar un cliente (actualizar estado a "ACT")
+Método HTTP: PUT
+URL: http://localhost:8080/client/reactivate/{id}
+Reemplaza {id} con el ID del cliente.
+Filtrar clientes por identification_type
+Método HTTP: GET
+URL: http://localhost:8080/client/identification_type/RUC
+Buscar clientes por tradename
+Método HTTP: GET
+URL: http://localhost:8080/client/tradename/{tradename}
+Reemplaza {tradename} con el nombre comercial del cliente.
+Buscar clientes por company_name
+Método HTTP: GET
+URL: http://localhost:8080/client/company_name/{companyName}
+Reemplaza {companyName} con el nombre de la compañía del cliente.
+
+
+Obtener un cliente por identificación
+Método HTTP: GET
+URL: http://localhost:8080/client/identification/{identification}
+Reemplaza {identification} con la identificación del cliente. Por ejemplo, si la identificación es 1234567890, la URL sería http://localhost:8080/client/identification/1234567890.
+Obtener un cliente por email
+Método HTTP: GET
+URL: http://localhost:8080/client/email/{email}
+Reemplaza {email} con el email del cliente. Por ejemplo, si el email es johndoe@example.com, la URL sería http://localhost:8080/client/email/johndoe@example.com.
+Obtener un cliente por nombre completo
+Método HTTP: GET
+URL: http://localhost:8080/client/fullname/{fullName}
+Reemplaza {fullName} con el nombre completo del cliente. Por ejemplo, si el nombre completo es John Doe, la URL sería http://localhost:8080/client/fullname/John%20Doe (asegúrate de codificar espacios como %20).
+
+--PHONE--
+Crear un nuevo teléfono para un cliente
+Método HTTP: POST
+URL: http://localhost:8080/client_phone
+Headers:
+Content-Type: application/json
+{
+  "clientId": 1,
+  "phoneType": "MOB",
+  "phoneNumber": "0987654321",
+  "isDefault": true,
+  "state": "ACT"
+}
+
+Obtener todos los teléfonos de un cliente específico
+Método HTTP: GET
+URL: http://localhost:8080/client_phone/client/{clientId}
+Reemplaza {clientId} con el ID del cliente.
+Actualizar un teléfono de cliente
+Método HTTP: PUT
+URL: http://localhost:8080/client_phone/{id}
+
+Eliminar un teléfono de cliente
+Método HTTP: DELETE
+URL: http://localhost:8080/client_phone/{id}
+Reemplaza {id} con el ID del teléfono que quieres eliminar.
+
+
+
+---Pruebas para ClientAddress---
+Crear una nueva dirección para un cliente
+Método HTTP: POST
+URL: http://localhost:8080/client_address
+
+Obtener todas las direcciones de un cliente específico
+Método HTTP: GET
+URL: http://localhost:8080/client_address/client/{clientId}
+Reemplaza {clientId} con el ID del cliente.
+Actualizar una dirección de cliente
+Método HTTP: PUT
+URL: http://localhost:8080/client_address/{id}
+
+Eliminar una dirección de cliente
+Método HTTP: DELETE
+URL: http://localhost:8080/client_address/{id}
+Reemplaza {id} con el ID de la dirección que quieres eliminar.
+Pruebas para Segment
+Crear un nuevo segmento
+Método HTTP: POST
+URL: http://localhost:8080/segment
+Headers:
+Content-Type: application/json
+
+Obtener todos los segmentos ordenados por nombre
+Método HTTP: GET
+URL: http://localhost:8080/segment
+Obtener un segmento por código
+Método HTTP: GET
+URL: http://localhost:8080/segment/{code}
+Reemplaza {code} con el código del segmento.
+Actualizar un segmento
+Método HTTP: PUT
+URL: http://localhost:8080/segment/{code}
+
+Eliminar un segmento
+Método HTTP: DELETE
+URL: http://localhost:8080/segment/{code}
+Reemplaza {code} con el código del segmento que quieres eliminar.
