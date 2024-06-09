@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,22 +26,29 @@ public class ClientPhone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CLIENT_PHONE_ID", nullable = false)
-    private Integer id;
+    private Long id;
+
     @Column(name = "CLIENT_ID", nullable = false)
-    private Integer clientId;
+    private Long clientId;
+
     @Column(name = "PHONE_TYPE", length = 3, nullable = false)
     private String phoneType;
+
     @Column(name = "PHONE_NUMBER", length = 20, nullable = false)
     private String phoneNumber;
+
     @Column(name = "IS_DEFAULT", nullable = false)
     private Boolean isDefault;
+
     @Column(name = "STATE", length = 3, nullable = false)
     private String state;
+
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "CLIENT_ID", insertable = false, updatable = false)
+    @JsonBackReference
     private Client client;
 
-    public ClientPhone(Integer id) {
+    public ClientPhone(Long id) {
         this.id = id;
     }
 
@@ -68,5 +76,4 @@ public class ClientPhone implements Serializable {
             return false;
         return true;
     }
-
 }

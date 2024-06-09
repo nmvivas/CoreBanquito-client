@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,52 +35,75 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CLIENT_ID")
     private Long id;
+
     @Column(name = "CODE_SEGMENT", length = 10, nullable = false)
     private String codeSegment;
+
     @Column(name = "CLIENT_TYPE", length = 3, nullable = false)
     private String clientType;
+
     @Column(name = "IDENTIFICATION_TYPE", length = 3, nullable = false)
     private String identificationType;
+
     @Column(name = "IDENTIFICATION", length = 20, nullable = false)
     private String identification;
+
     @Column(name = "LAST_NAME", length = 50)
     private String lastName;
+
     @Column(name = "FIRST_NAME", length = 50)
     private String firstName;
+
     @Column(name = "FULL_NAME", length = 100)
     private String fullName;
+
     @Column(name = "EMAIL", length = 100, nullable = false)
     private String email;
-    @Column(name = "BIRTH_DATE")
+
     @Temporal(TemporalType.DATE)
+    @Column(name = "BIRTH_DATE")
     private Date birthDate;
+
     @Column(name = "COMPANY_NAME", length = 100)
     private String companyName;
+
+    @Column(name = "TRADENAME", length = 100)
+    private String tradename;
+
     @Column(name = "COMPANY_TYPE", length = 16)
     private String companyType;
+
     @Column(name = "STATE", length = 3, nullable = false)
     private String state;
-    @Column(name = "CREATE_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp createDate;
+
+    @Column(name = "CREATION_DATE", nullable = false)
+    private Timestamp creationDate;
+
     @Column(name = "LAST_STATUS_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp lastStatusDate;
+
     @Column(name = "NATIONALITY", length = 50)
     private String nationality;
+
     @Column(name = "MARITAL_STATUS", length = 3)
     private String maritalStatus;
+
     @Column(name = "MONTHLY_AVG_INCOME", precision = 17, scale = 2)
     private BigDecimal monthlyAvgIncome;
+
     @Column(name = "NOTES", length = 1000)
     private String notes;
 
     @ManyToOne
     @JoinColumn(name = "CODE_SEGMENT", referencedColumnName = "CODE_SEGMENT", insertable = false, updatable = false)
     private Segment segment;
+
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     private List<ClientPhone> phones;
+
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     private List<ClientAddress> addresses;
 
     public Client(Long clientId) {
@@ -110,5 +134,4 @@ public class Client implements Serializable {
             return false;
         return true;
     }
-
 }

@@ -77,7 +77,7 @@ public class ClientService {
             client.setCompanyName(clientDetails.getCompanyName());
             client.setCompanyType(clientDetails.getCompanyType());
             client.setState(clientDetails.getState());
-            client.setCreateDate(clientDetails.getCreateDate());
+            client.setCreationDate(clientDetails.getCreationDate());
             client.setLastStatusDate(clientDetails.getLastStatusDate());
             client.setNationality(clientDetails.getNationality());
             client.setMaritalStatus(clientDetails.getMaritalStatus());

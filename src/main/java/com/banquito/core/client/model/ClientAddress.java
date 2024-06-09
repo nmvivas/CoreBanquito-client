@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,31 +26,41 @@ public class ClientAddress implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CLIENT_ADDRESS_ID", nullable = false)
-    private Integer id;
+    private Long id;
+
     @Column(name = "CLIENT_ID", nullable = false)
-    private Integer clientId;
+    private Long clientId;
+
     @Column(name = "TYPE_ADDRESS", length = 3, nullable = false)
     private String typeAddress;
+
     @Column(name = "LINE1", length = 100, nullable = false)
     private String line1;
+
     @Column(name = "LINE2", length = 100)
     private String line2;
+
     @Column(name = "LATITUDE")
     private Float latitude;
+
     @Column(name = "LONGITUDE")
     private Float longitude;
+
     @Column(name = "ZIP_CODE", length = 10)
     private String zipCode;
+
     @Column(name = "IS_DEFAULT", nullable = false)
     private Boolean isDefault;
+
     @Column(name = "STATE", length = 3, nullable = false)
     private String state;
 
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "CLIENT_ID", insertable = false, updatable = false)
+    @JsonBackReference
     private Client client;
 
-    public ClientAddress(Integer id) {
+    public ClientAddress(Long id) {
         this.id = id;
     }
 
@@ -77,5 +88,4 @@ public class ClientAddress implements Serializable {
             return false;
         return true;
     }
-
 }

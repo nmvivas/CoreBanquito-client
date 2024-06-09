@@ -1,59 +1,56 @@
 package com.banquito.core.client.controller;
 
 import com.banquito.core.client.model.Segment;
-import com.banquito.core.client.repository.SegmentRepository;
+import com.banquito.core.client.service.SegmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/segment")
 public class SegmentController {
 
     @Autowired
-    private SegmentRepository segmentRepository;
+    private SegmentService segmentService;
 
     @GetMapping
     public List<Segment> getAllSegments() {
-        return segmentRepository.findAllByOrderByName();
+        return segmentService.getAllSegments();
     }
 
     @GetMapping("/{code}")
     public ResponseEntity<Segment> getSegmentByCode(@PathVariable String code) {
-        Optional<Segment> segment = segmentRepository.findById(code);
-        return segment.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            Segment segment = segmentService.getSegmentByCode(code);
+            return ResponseEntity.ok(segment);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
     public Segment createSegment(@RequestBody Segment segment) {
-        return segmentRepository.save(segment);
+        return segmentService.createSegment(segment);
     }
 
     @PutMapping("/{code}")
     public ResponseEntity<Segment> updateSegment(@PathVariable String code, @RequestBody Segment segmentDetails) {
-        Optional<Segment> optionalSegment = segmentRepository.findById(code);
-        if (optionalSegment.isPresent()) {
-            Segment segment = optionalSegment.get();
-            segment.setName(segmentDetails.getName());
-            segment.setClientType(segmentDetails.getClientType());
-            segment.setDescription(segmentDetails.getDescription());
-            final Segment updatedSegment = segmentRepository.save(segment);
+        try {
+            Segment updatedSegment = segmentService.updateSegment(code, segmentDetails);
             return ResponseEntity.ok(updatedSegment);
-        } else {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{code}")
     public ResponseEntity<Void> deleteSegment(@PathVariable String code) {
-        Optional<Segment> optionalSegment = segmentRepository.findById(code);
-        if (optionalSegment.isPresent()) {
-            segmentRepository.delete(optionalSegment.get());
+        try {
+            segmentService.deleteSegment(code);
             return ResponseEntity.noContent().build();
-        } else {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }

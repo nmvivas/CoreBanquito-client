@@ -21,10 +21,13 @@ public class Segment implements Serializable {
     @Id
     @Column(name = "CODE_SEGMENT", length = 10, nullable = false)
     private String code;
+
     @Column(name = "NAME", length = 50, nullable = false)
     private String name;
+
     @Column(name = "CLIENT_TYPE", length = 3, nullable = false)
     private String clientType;
+
     @Column(name = "DESCRIPTION", length = 500)
     private String description;
 
@@ -56,5 +59,4 @@ public class Segment implements Serializable {
             return false;
         return true;
     }
-
 }
