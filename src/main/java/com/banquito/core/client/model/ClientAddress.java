@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Getter
@@ -41,10 +42,10 @@ public class ClientAddress implements Serializable {
     private String line2;
 
     @Column(name = "LATITUDE")
-    private Float latitude;
+    private BigDecimal latitude;
 
     @Column(name = "LONGITUDE")
-    private Float longitude;
+    private BigDecimal longitude;
 
     @Column(name = "ZIP_CODE", length = 10)
     private String zipCode;

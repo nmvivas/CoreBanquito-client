@@ -2,8 +2,7 @@ package com.banquito.core.client.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -60,9 +59,9 @@ public class Client implements Serializable {
     @Column(name = "EMAIL", length = 100, nullable = false)
     private String email;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "BIRTH_DATE")
-    private Date birthDate;
+    private LocalDateTime birthDate;
 
     @Column(name = "COMPANY_NAME", length = 100)
     private String companyName;
@@ -76,11 +75,13 @@ public class Client implements Serializable {
     @Column(name = "STATE", length = 3, nullable = false)
     private String state;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATION_DATE", nullable = false)
-    private Timestamp creationDate;
+    private LocalDateTime creationDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_STATUS_DATE", nullable = false)
-    private Timestamp lastStatusDate;
+    private LocalDateTime lastStatusDate;
 
     @Column(name = "NATIONALITY", length = 50)
     private String nationality;

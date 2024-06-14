@@ -1,6 +1,6 @@
 package com.banquito.core.client.controller;
 
-import com.banquito.core.client.model.Client;
+import com.banquito.core.client.dto.ClientDTO;
 import com.banquito.core.client.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,14 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public List<Client> getAllClients() {
+    public List<ClientDTO> getAllClients() {
         return clientService.getAllClients();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
         try {
-            Client client = clientService.getClientById(id);
+            ClientDTO client = clientService.getClientById(id);
             return ResponseEntity.ok(client);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -31,9 +31,9 @@ public class ClientController {
     }
 
     @GetMapping("/identification/{identification}")
-    public ResponseEntity<Client> getClientByIdentification(@PathVariable String identification) {
+    public ResponseEntity<ClientDTO> getClientByIdentification(@PathVariable String identification) {
         try {
-            Client client = clientService.getClientByIdentification(identification);
+            ClientDTO client = clientService.getClientByIdentification(identification);
             return ResponseEntity.ok(client);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -41,9 +41,9 @@ public class ClientController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<Client> getClientByEmail(@PathVariable String email) {
+    public ResponseEntity<ClientDTO> getClientByEmail(@PathVariable String email) {
         try {
-            Client client = clientService.getClientByEmail(email);
+            ClientDTO client = clientService.getClientByEmail(email);
             return ResponseEntity.ok(client);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -51,9 +51,9 @@ public class ClientController {
     }
 
     @GetMapping("/fullname/{fullName}")
-    public ResponseEntity<Client> getClientByFullName(@PathVariable String fullName) {
+    public ResponseEntity<ClientDTO> getClientByFullName(@PathVariable String fullName) {
         try {
-            Client client = clientService.getClientByFullName(fullName);
+            ClientDTO client = clientService.getClientByFullName(fullName);
             return ResponseEntity.ok(client);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -61,14 +61,14 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client createClient(@RequestBody Client client) {
+    public ClientDTO createClient(@RequestBody ClientDTO client) {
         return clientService.createClient(client);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client clientDetails) {
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody ClientDTO clientDetails) {
         try {
-            Client updatedClient = clientService.updateClient(id, clientDetails);
+            ClientDTO updatedClient = clientService.updateClient(id, clientDetails);
             return ResponseEntity.ok(updatedClient);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -96,22 +96,22 @@ public class ClientController {
     }
 
     @GetMapping("/last")
-    public ResponseEntity<Client> getLastInsertedClient() {
+    public ResponseEntity<ClientDTO> getLastInsertedClient() {
         return ResponseEntity.ok(clientService.getLastInsertedClient());
     }
 
     @GetMapping("/identification_type/{identificationType}")
-    public List<Client> getClientsByIdentificationType(@PathVariable String identificationType) {
+    public List<ClientDTO> getClientsByIdentificationType(@PathVariable String identificationType) {
         return clientService.getClientsByIdentificationType(identificationType);
     }
 
     @GetMapping("/tradename/{tradename}")
-    public List<Client> getClientsByTradename(@PathVariable String tradename) {
+    public List<ClientDTO> getClientsByTradename(@PathVariable String tradename) {
         return clientService.getClientsByTradename(tradename);
     }
 
     @GetMapping("/company_name/{companyName}")
-    public List<Client> getClientsByCompanyName(@PathVariable String companyName) {
+    public List<ClientDTO> getClientsByCompanyName(@PathVariable String companyName) {
         return clientService.getClientsByCompanyName(companyName);
     }
 }

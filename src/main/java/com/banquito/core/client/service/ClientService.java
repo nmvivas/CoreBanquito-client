@@ -4,10 +4,14 @@ import com.banquito.core.client.model.Client;
 import com.banquito.core.client.repository.ClientRepository;
 import com.banquito.core.client.repository.ClientPhoneRepository;
 import com.banquito.core.client.repository.ClientAddressRepository;
+import com.banquito.core.client.dto.ClientDTO;
+import com.banquito.core.client.util.mapper.ClientMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -15,66 +19,66 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientPhoneRepository clientPhoneRepository;
     private final ClientAddressRepository clientAddressRepository;
+    private final ClientMapper clientMapper;
 
     public ClientService(ClientRepository clientRepository, ClientPhoneRepository clientPhoneRepository,
-            ClientAddressRepository clientAddressRepository) {
+            ClientAddressRepository clientAddressRepository, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
         this.clientPhoneRepository = clientPhoneRepository;
         this.clientAddressRepository = clientAddressRepository;
+        this.clientMapper = clientMapper;
     }
 
-    public Client getClientById(Long id) {
+    public ClientDTO getClientById(Long id) {
         Optional<Client> clientOpt = clientRepository.findById(id);
-        return clientOpt.orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
+        Client client = clientOpt.orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
+        return clientMapper.toDTO(client);
     }
 
-    public Client getClientByIdentification(String identification) {
-        return clientRepository.findByIdentification(identification);
+    public ClientDTO getClientByIdentification(String identification) {
+        return clientMapper.toDTO(clientRepository.findByIdentification(identification));
     }
 
-    public Client getClientByEmail(String email) {
-        return clientRepository.findByEmail(email);
+    public ClientDTO getClientByEmail(String email) {
+        return clientMapper.toDTO(clientRepository.findByEmail(email));
     }
 
-    public Client getClientByFullName(String fullName) {
-        return clientRepository.findByFullName(fullName);
+    public ClientDTO getClientByFullName(String fullName) {
+        return clientMapper.toDTO(clientRepository.findByFullName(fullName));
     }
 
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public List<ClientDTO> getAllClients() {
+        return clientRepository.findAll().stream()
+                .map(clientMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Client createClient(Client client) {
-        return clientRepository.save(client);
+    public ClientDTO createClient(ClientDTO clientDTO) {
+        Client client = clientMapper.toPersistence(clientDTO);
+        return clientMapper.toDTO(clientRepository.save(client));
     }
 
-    public Client updateClient(Long id, Client clientDetails) {
-        Client client = getClientById(id);
-        client.setCodeSegment(clientDetails.getCodeSegment());
-        client.setClientType(clientDetails.getClientType());
-        client.setIdentificationType(clientDetails.getIdentificationType());
-        client.setIdentification(clientDetails.getIdentification());
+    public ClientDTO updateClient(Long id, ClientDTO clientDetails) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
         client.setLastName(clientDetails.getLastName());
         client.setFirstName(clientDetails.getFirstName());
         client.setFullName(clientDetails.getFullName());
         client.setEmail(clientDetails.getEmail());
-        client.setBirthDate(clientDetails.getBirthDate());
+        client.setMaritalStatus(clientDetails.getMaritalStatus());
+        client.setNationality(clientDetails.getNationality());
         client.setCompanyName(clientDetails.getCompanyName());
         client.setTradename(clientDetails.getTradename());
         client.setCompanyType(clientDetails.getCompanyType());
-        client.setState(clientDetails.getState());
-        client.setCreationDate(clientDetails.getCreationDate());
-        client.setLastStatusDate(clientDetails.getLastStatusDate());
-        client.setNationality(clientDetails.getNationality());
-        client.setMaritalStatus(clientDetails.getMaritalStatus());
-        client.setMonthlyAvgIncome(clientDetails.getMonthlyAvgIncome());
         client.setNotes(clientDetails.getNotes());
-        return clientRepository.save(client);
+
+        return clientMapper.toDTO(clientRepository.save(client));
     }
 
     @Transactional
     public void deleteClient(Long id) {
-        Client client = getClientById(id);
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
         client.setState("INA");
         clientRepository.save(client);
 
@@ -91,7 +95,8 @@ public class ClientService {
 
     @Transactional
     public void reactivateClient(Long id) {
-        Client client = getClientById(id);
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
         client.setState("ACT");
         clientRepository.save(client);
 
@@ -106,19 +111,25 @@ public class ClientService {
         });
     }
 
-    public Client getLastInsertedClient() {
-        return clientRepository.findTopByOrderByCreationDateDesc();
+    public ClientDTO getLastInsertedClient() {
+        return clientMapper.toDTO(clientRepository.findTopByOrderByCreationDateDesc());
     }
 
-    public List<Client> getClientsByIdentificationType(String identificationType) {
-        return clientRepository.findByIdentificationType(identificationType);
+    public List<ClientDTO> getClientsByIdentificationType(String identificationType) {
+        return clientRepository.findByIdentificationType(identificationType).stream()
+                .map(clientMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Client> getClientsByTradename(String tradename) {
-        return clientRepository.findByTradename(tradename);
+    public List<ClientDTO> getClientsByTradename(String tradename) {
+        return clientRepository.findByTradename(tradename).stream()
+                .map(clientMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Client> getClientsByCompanyName(String companyName) {
-        return clientRepository.findByCompanyName(companyName);
+    public List<ClientDTO> getClientsByCompanyName(String companyName) {
+        return clientRepository.findByCompanyName(companyName).stream()
+                .map(clientMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
