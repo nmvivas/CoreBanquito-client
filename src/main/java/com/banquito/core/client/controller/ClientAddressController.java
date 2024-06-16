@@ -2,18 +2,22 @@ package com.banquito.core.client.controller;
 
 import com.banquito.core.client.model.ClientAddress;
 import com.banquito.core.client.service.ClientAddressService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.PUT })
 @RestController
 @RequestMapping("/client_address")
 public class ClientAddressController {
 
-    @Autowired
-    private ClientAddressService clientAddressService;
+    private final ClientAddressService clientAddressService;
+
+    public ClientAddressController(ClientAddressService clientAddressService) {
+        this.clientAddressService = clientAddressService;
+    }
 
     @GetMapping
     public List<ClientAddress> getAllClientAddresses() {

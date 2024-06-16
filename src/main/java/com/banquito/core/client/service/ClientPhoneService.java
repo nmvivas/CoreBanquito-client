@@ -11,6 +11,7 @@ import java.util.Optional;
 public class ClientPhoneService {
 
     private final ClientPhoneRepository repository;
+    private static final String CLIENT_PHONE_NOT_FOUND = "No existe el teléfono con id: ";
 
     public ClientPhoneService(ClientPhoneRepository repository) {
         this.repository = repository;
@@ -25,7 +26,7 @@ public class ClientPhoneService {
         if (clientPhoneOpt.isPresent()) {
             return clientPhoneOpt.get();
         } else {
-            throw new RuntimeException("No existe el teléfono con id: " + id);
+            throw new RuntimeException(CLIENT_PHONE_NOT_FOUND + id);
         }
     }
 
@@ -52,7 +53,7 @@ public class ClientPhoneService {
             clientPhone.setState(clientPhoneDetails.getState());
             return repository.save(clientPhone);
         } else {
-            throw new RuntimeException("No existe el teléfono con id: " + id);
+            throw new RuntimeException(CLIENT_PHONE_NOT_FOUND + id);
         }
     }
 
@@ -61,7 +62,7 @@ public class ClientPhoneService {
         if (optionalClientPhone.isPresent()) {
             repository.delete(optionalClientPhone.get());
         } else {
-            throw new RuntimeException("No existe el teléfono con id: " + id);
+            throw new RuntimeException(CLIENT_PHONE_NOT_FOUND + id);
         }
     }
 }

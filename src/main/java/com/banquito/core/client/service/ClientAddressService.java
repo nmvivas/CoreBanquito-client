@@ -11,6 +11,7 @@ import java.util.Optional;
 public class ClientAddressService {
 
     private final ClientAddressRepository repository;
+    private static final String CLIENT_ADDRESS_NOT_FOUND = "No existe la dirección con id: ";
 
     public ClientAddressService(ClientAddressRepository repository) {
         this.repository = repository;
@@ -25,7 +26,7 @@ public class ClientAddressService {
         if (clientAddressOpt.isPresent()) {
             return clientAddressOpt.get();
         } else {
-            throw new RuntimeException("No existe la dirección con id: " + id);
+            throw new RuntimeException(CLIENT_ADDRESS_NOT_FOUND + id);
         }
     }
 
@@ -56,7 +57,7 @@ public class ClientAddressService {
             clientAddress.setState(clientAddressDetails.getState());
             return repository.save(clientAddress);
         } else {
-            throw new RuntimeException("No existe la dirección con id: " + id);
+            throw new RuntimeException(CLIENT_ADDRESS_NOT_FOUND + id);
         }
     }
 
@@ -65,7 +66,7 @@ public class ClientAddressService {
         if (optionalClientAddress.isPresent()) {
             repository.delete(optionalClientAddress.get());
         } else {
-            throw new RuntimeException("No existe la dirección con id: " + id);
+            throw new RuntimeException(CLIENT_ADDRESS_NOT_FOUND + id);
         }
     }
 }

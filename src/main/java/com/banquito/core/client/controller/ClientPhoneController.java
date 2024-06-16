@@ -2,18 +2,22 @@ package com.banquito.core.client.controller;
 
 import com.banquito.core.client.model.ClientPhone;
 import com.banquito.core.client.service.ClientPhoneService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.PUT })
 @RestController
 @RequestMapping("/client_phone")
 public class ClientPhoneController {
 
-    @Autowired
-    private ClientPhoneService clientPhoneService;
+    private final ClientPhoneService clientPhoneService;
+
+    public ClientPhoneController(ClientPhoneService clientPhoneService) {
+        this.clientPhoneService = clientPhoneService;
+    }
 
     @GetMapping
     public List<ClientPhone> getAllClientPhones() {

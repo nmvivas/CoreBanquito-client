@@ -2,18 +2,22 @@ package com.banquito.core.client.controller;
 
 import com.banquito.core.client.model.Segment;
 import com.banquito.core.client.service.SegmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.PUT })
 @RestController
 @RequestMapping("/segment")
 public class SegmentController {
 
-    @Autowired
-    private SegmentService segmentService;
+    private final SegmentService segmentService;
+
+    public SegmentController(SegmentService segmentService) {
+        this.segmentService = segmentService;
+    }
 
     @GetMapping
     public List<Segment> getAllSegments() {

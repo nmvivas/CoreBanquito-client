@@ -20,6 +20,7 @@ public class ClientService {
     private final ClientPhoneRepository clientPhoneRepository;
     private final ClientAddressRepository clientAddressRepository;
     private final ClientMapper clientMapper;
+    private static final String CLIENT_NOT_FOUND = "No existe el cliente con id: ";
 
     public ClientService(ClientRepository clientRepository, ClientPhoneRepository clientPhoneRepository,
             ClientAddressRepository clientAddressRepository, ClientMapper clientMapper) {
@@ -31,7 +32,7 @@ public class ClientService {
 
     public ClientDTO getClientById(Long id) {
         Optional<Client> clientOpt = clientRepository.findById(id);
-        Client client = clientOpt.orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
+        Client client = clientOpt.orElseThrow(() -> new RuntimeException(CLIENT_NOT_FOUND + id));
         return clientMapper.toDTO(client);
     }
 
@@ -60,7 +61,7 @@ public class ClientService {
 
     public ClientDTO updateClient(Long id, ClientDTO clientDetails) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
+                .orElseThrow(() -> new RuntimeException(CLIENT_NOT_FOUND + id));
         client.setLastName(clientDetails.getLastName());
         client.setFirstName(clientDetails.getFirstName());
         client.setFullName(clientDetails.getFullName());
@@ -78,7 +79,7 @@ public class ClientService {
     @Transactional
     public void deleteClient(Long id) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
+                .orElseThrow(() -> new RuntimeException(CLIENT_NOT_FOUND + id));
         client.setState("INA");
         clientRepository.save(client);
 
@@ -96,7 +97,7 @@ public class ClientService {
     @Transactional
     public void reactivateClient(Long id) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No existe el cliente con id: " + id));
+                .orElseThrow(() -> new RuntimeException(CLIENT_NOT_FOUND + id));
         client.setState("ACT");
         clientRepository.save(client);
 

@@ -1,7 +1,6 @@
 package com.banquito.core.client.dto;
 
 import java.math.BigDecimal;
-
 import lombok.Builder;
 import lombok.Value;
 

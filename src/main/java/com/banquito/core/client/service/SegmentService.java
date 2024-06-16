@@ -11,6 +11,7 @@ import java.util.Optional;
 public class SegmentService {
 
     private final SegmentRepository repository;
+    private static final String CLIENT_SEGMENT_NOT_FOUND = "No existe el segmento con código: ";
 
     public SegmentService(SegmentRepository repository) {
         this.repository = repository;
@@ -25,7 +26,7 @@ public class SegmentService {
         if (segmentOpt.isPresent()) {
             return segmentOpt.get();
         } else {
-            throw new RuntimeException("No existe el segmento con código: " + code);
+            throw new RuntimeException(CLIENT_SEGMENT_NOT_FOUND + code);
         }
     }
 
@@ -42,7 +43,7 @@ public class SegmentService {
             segment.setDescription(segmentDetails.getDescription());
             return repository.save(segment);
         } else {
-            throw new RuntimeException("No existe el segmento con código: " + code);
+            throw new RuntimeException(CLIENT_SEGMENT_NOT_FOUND + code);
         }
     }
 
@@ -51,7 +52,7 @@ public class SegmentService {
         if (optionalSegment.isPresent()) {
             repository.delete(optionalSegment.get());
         } else {
-            throw new RuntimeException("No existe el segmento con código: " + code);
+            throw new RuntimeException(CLIENT_SEGMENT_NOT_FOUND + code);
         }
     }
 }
