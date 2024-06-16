@@ -21,9 +21,12 @@ public class ClientDTO {
     private String companyName;
     private String tradename;
     private String companyType;
+    private String state;
     private LocalDateTime creationDate;
+    // private LocalDateTime lastStatusDate;
     private String nationality;
     private String maritalStatus;
+    // private BigDecimal monthlyAvgIncome;
     private String notes;
 
     public String getFullName() {
