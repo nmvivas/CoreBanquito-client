@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,8 +30,8 @@ public class ClientService {
     }
 
     public ClientDTO getClientById(Long id) {
-        Optional<Client> clientOpt = clientRepository.findById(id);
-        Client client = clientOpt.orElseThrow(() -> new RuntimeException(CLIENT_NOT_FOUND + id));
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(CLIENT_NOT_FOUND + id));
         return clientMapper.toDTO(client);
     }
 
@@ -72,6 +71,9 @@ public class ClientService {
         client.setTradename(clientDetails.getTradename());
         client.setCompanyType(clientDetails.getCompanyType());
         client.setNotes(clientDetails.getNotes());
+        client.setIdentificationType(clientDetails.getIdentificationType());
+        client.setIdentification(clientDetails.getIdentification());
+        client.setMonthlyAvgIncome(clientDetails.getMonthlyAvgIncome());
 
         return clientMapper.toDTO(clientRepository.save(client));
     }

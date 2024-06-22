@@ -1,5 +1,6 @@
 package com.banquito.core.client.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import lombok.Builder;
@@ -23,10 +24,9 @@ public class ClientDTO {
     private String companyType;
     private String state;
     private LocalDateTime creationDate;
-    // private LocalDateTime lastStatusDate;
     private String nationality;
     private String maritalStatus;
-    // private BigDecimal monthlyAvgIncome;
+    private BigDecimal monthlyAvgIncome;
     private String notes;
 
     public String getFullName() {
