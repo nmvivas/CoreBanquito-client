@@ -90,7 +90,7 @@ public class ClientController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/activate/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         try {
             clientService.deleteClient(id);
