@@ -66,9 +66,6 @@ public class Client implements Serializable {
     @Column(name = "COMPANY_NAME", length = 100)
     private String companyName;
 
-    @Column(name = "TRADENAME", length = 100)
-    private String tradename;
-
     @Column(name = "COMPANY_TYPE", length = 16)
     private String companyType;
 
@@ -94,6 +91,7 @@ public class Client implements Serializable {
 
     @Column(name = "NOTES", length = 1000)
     private String notes;
+
     @ManyToOne
     @JoinColumn(name = "CODE_SEGMENT", referencedColumnName = "CODE_SEGMENT", insertable = false, updatable = false)
     private Segment segment;
