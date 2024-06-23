@@ -6,7 +6,9 @@ import com.banquito.core.client.service.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
+import com.banquito.core.client.model.Client;
+import com.banquito.core.client.service.ClientService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT })
@@ -25,12 +27,13 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id) {
         try {
             ClientDTO client = clientService.getClientById(id);
             return ResponseEntity.ok(client);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException rte) {
             return ResponseEntity.notFound().build();
         }
     }
