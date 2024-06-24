@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.banquito.core</groupId>
 	<artifactId>client</artifactId>
-	<version>V1.0</version>
+	<version>V1.1</version>
 	<name>client</name>
 	<description>Client APIs REST</description>
 	<properties>
